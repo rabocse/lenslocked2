@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"html/template"
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -9,31 +11,30 @@ import (
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprint(w, "<h1>Welcome to my site!</h1>")
-}
+	tpl, err := template.ParseFiles("template/home.gohtml")
+	if err != nil {
+		log.Printf("parsing template %v", err)
+		http.Error(w, "There was an error parsing the template", http.StatusInternalServerError)
+		return
+	}
 
-func contactHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprint(w, "<h1>Contact Page</h1><p>To get in touch, email me at <a href=\"mailto:alexrabocse.me@gmail.com\">alexrabocse.me@gmail.com</a></p>")
-}
-
-func catchUserHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	user := chi.URLParam(r, "user")
-	fmt.Fprintf(w, "Hello, %s!", user)
+	err = tpl.Execute(w, nil)
+	if err != nil {
+		log.Printf("executing template %v", err)
+		http.Error(w, "There was an error executing the template", http.StatusInternalServerError)
+		return
+	}
 }
 
 func main() {
 
 	r := chi.NewRouter()
 	r.Get("/", homeHandler)
-	r.Get("/{user}", catchUserHandler)
-
-	r.Get("/contact", contactHandler)
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
-		http.Error(w, "Page not Found !!!!", http.StatusNotFound)
+		http.Error(w, "Page Not Found", http.StatusNotFound)
 	})
 
-	fmt.Println("Starting server on :3000...")
+	fmt.Println("Starting the server on :3000...")
 	http.ListenAndServe(":3000", r)
+
 }
