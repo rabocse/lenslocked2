@@ -37,11 +37,16 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
 	executeTemplate(w, tplPath)
 }
 
+func faqHandler(w http.ResponseWriter, r *http.Request) {
+	tplPath := filepath.Join("template/faq.gohtml")
+	executeTemplate(w, tplPath)
+}
 func main() {
 
 	r := chi.NewRouter()
 	r.Get("/", homeHandler)
 	r.Get("/contact", contactHandler)
+	r.Get("/faq", faqHandler)
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Page Not Found", http.StatusNotFound)
 	})

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ – Test Page</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px auto;
+      max-width: 800px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
+    }
+
+    .faq-question {
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      display: none;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    .faq-question span {
+      transition: transform 0.2s ease;
+    }
+
+    .faq-question.open span {
+      transform: rotate(90deg);
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Frequently Asked Questions</h1>
+
+  <div class="faq-item">
+    <div class="faq-question">
+      <div>What is this page for?</div>
+      <span>▶</span>
+    </div>
+    <div class="faq-answer">
+      This is a test FAQ page used for development, layout checks, or demo purposes.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question">
+      <div>Can I customize it?</div>
+      <span>▶</span>
+    </div>
+    <div class="faq-answer">
+      Yes — feel free to modify the HTML, CSS, or JavaScript to fit your needs.
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-question">
+      <div>Does it require a backend?</div>
+      <span>▶</span>
+    </div>
+    <div class="faq-answer">
+      No backend is required. Everything runs client‑side for easy testing.
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll(".faq-question").forEach(q => {
+      q.addEventListener("click", () => {
+        q.classList.toggle("open");
+        const answer = q.nextElementSibling;
+        answer.style.display = answer.style.display === "block" ? "none" : "block";
+      });
+    });
+  </script>
+</body>
+</html>
