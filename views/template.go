@@ -14,8 +14,8 @@ type Template struct {
 
 // ParseFS is a helper function that parses templates from an fs.FS instead of the file system.
 // This is useful for parsing templates from an embedded file system.
-func ParseFS(fs fs.FS, pattern string) (Template, error) {
-	tpl, err := template.ParseFS(fs, pattern)
+func ParseFS(fs fs.FS, pattern ...string) (Template, error) {
+	tpl, err := template.ParseFS(fs, pattern...)
 	if err != nil {
 		return Template{}, fmt.Errorf("parsing template %v", err)
 	}
