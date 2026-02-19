@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"html/template"
 	"net/http"
 
 	"github.com/rabocse/lenslocked2/views"
@@ -16,7 +17,7 @@ func FAQ(tpl views.Template) http.HandlerFunc {
 
 	questions := []struct {
 		Question string
-		Answer   string
+		Answer   template.HTML // Only because the answer contains HTML tags. In a real application, you should be careful when using template.HTML to avoid XSS vulnerabilities.
 	}{
 		{
 			Question: "Is there a free version?",
